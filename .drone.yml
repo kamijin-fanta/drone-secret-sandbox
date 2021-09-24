@@ -8,7 +8,7 @@ steps:
     EXAMPLE_SECRET:
       from_secret: example_secret
   commands:
-    - echo ${EXAMPLE_SECRET}
+    - echo $EXAMPLE_SECRET
     
 
 ---
