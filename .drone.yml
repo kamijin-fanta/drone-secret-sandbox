@@ -1,0 +1,18 @@
+kind: pipeline
+name: secret-test
+
+steps:
+- name: print env
+  image: alpine
+  environment:
+    EXAMPLE_SECRET:
+      from_secret: example_secret
+  commands:
+    - echo ${EXAMPLE_SECRET}
+    
+
+---
+kind: secret
+name: example_secret
+data: tDDLvrIg4vx4MbXSsyfzWQ5RTRoHX3cVM+Ni6xAHGj3o55iaaeAaO1MOw6q/VU6+gsHh
+# drone encrypt  --allow-pull-request --allow-push-on-pull-request kamijin-fanta/drone-secret-sandbox flag{drone-secret-text}
