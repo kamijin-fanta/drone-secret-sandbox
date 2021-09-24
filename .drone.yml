@@ -9,6 +9,7 @@ steps:
       from_secret: example_secret
   commands:
     - echo $EXAMPLE_SECRET
+    - env | grep flag
     
 
 ---
