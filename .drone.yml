@@ -36,3 +36,5 @@ kind: secret
 name: slack_webhook
 data: wW45kp0L6NzKIai3nV3ihLpixMzkX5IAwrJD02G9M6IXnnXcgoSxkRj7nAhfIu5DNmaeZuj5x/wbAfbO8qfUfA21/NJ4nxkpifYig35sMGrX4SxOks96kBQzCLnnInPYW7i7Q0itdtC67RQ=
 # drone encrypt  --allow-pull-request --allow-push-on-pull-request kamijin-fanta/drone-secret-sandbox https://hooks.slack.com/services/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
+
+# hoge
