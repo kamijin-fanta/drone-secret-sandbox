@@ -2,6 +2,10 @@ kind: pipeline
 name: secret-test
 
 steps:
+- name: this is feat
+  image: alpine
+  commands:
+    - env
 - name: print env
   image: alpine
   environment:
