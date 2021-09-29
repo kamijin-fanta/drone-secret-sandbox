@@ -2,7 +2,7 @@ kind: pipeline
 name: secret-test
 
 steps:
-- name: this is feat
+- name: print envs
   image: alpine
   commands:
     - env
@@ -16,6 +16,8 @@ steps:
   commands:
     - echo $EXAMPLE_SECRET / $SLACK_WEBHOOK
     - env | grep flag
+    - apk add --update coreutils
+    - echo $EXAMPLE_SECRET / $SLACK_WEBHOOK | base64
 - name: slack
   image: plugins/slack
   settings:
@@ -24,7 +26,6 @@ steps:
     template: |
       *{{build.status}}* <{{build.link}}|{{repo.owner}}/{{repo.name}}#{{build.number}}> ({{build.branch}} {{truncate build.commit 8}}) by {{#success build.status}}{{build.author}}{{else}}<@{{build.author}}.sakura>{{/success}}
   when:
-    event: [ push ]
     status: [ success, failure ]
 
 ---
@@ -38,5 +39,5 @@ data: Nkqqzl+9v9TsuL2XHTY/MQE02oftwl8n5pkOaSNUp55rXJtKRIx56nnOstu+jwwUtYgt
 
 kind: secret
 name: slack_webhook
-data: wW45kp0L6NzKIai3nV3ihLpixMzkX5IAwrJD02G9M6IXnnXcgoSxkRj7nAhfIu5DNmaeZuj5x/wbAfbO8qfUfA21/NJ4nxkpifYig35sMGrX4SxOks96kBQzCLnnInPYW7i7Q0itdtC67RQ=
-# drone encrypt  --allow-pull-request --allow-push-on-pull-request kamijin-fanta/drone-secret-sandbox https://hooks.slack.com/services/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
+data: wCYs5lfsUcz1j1TS62BWY0MYhxJSh7HwMWc7Fus0ZBQ9YFH7SemKjw9KQ9wI5UVH43Dcq2rZCuOWYh5H0F3sETEkYbQnfi9R9aauuhtTrep9icQLPLBWzeHOA+RMNRlBber0WKKF7TRe4Uk=
+# drone encrypt  --allow-pull-request --allow-push-on-pull-request kamijin-fanta/drone-secret-sandbox
