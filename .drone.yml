@@ -7,13 +7,32 @@ steps:
   environment:
     EXAMPLE_SECRET:
       from_secret: example_secret
+    SLACK_WEBHOOK:
+      from_secret: slack_webhook
   commands:
-    - echo $EXAMPLE_SECRET
+    - echo $EXAMPLE_SECRET / $SLACK_WEBHOOK
     - env | grep flag
-    
+- name: slack
+  image: plugins/slack
+  settings:
+    webhook:
+      from_secret: slack_webhook
+    template: |
+      *{{build.status}}* <{{build.link}}|{{repo.owner}}/{{repo.name}}#{{build.number}}> ({{build.branch}} {{truncate build.commit 8}}) by {{#success build.status}}{{build.author}}{{else}}<@{{build.author}}.sakura>{{/success}}
+  when:
+    event: [ push ]
+    status: [ success, failure ]
 
 ---
+
 kind: secret
 name: example_secret
-data: tDDLvrIg4vx4MbXSsyfzWQ5RTRoHX3cVM+Ni6xAHGj3o55iaaeAaO1MOw6q/VU6+gsHh
+data: Nkqqzl+9v9TsuL2XHTY/MQE02oftwl8n5pkOaSNUp55rXJtKRIx56nnOstu+jwwUtYgt
 # drone encrypt  --allow-pull-request --allow-push-on-pull-request kamijin-fanta/drone-secret-sandbox flag{drone-secret-text}
+
+---
+
+kind: secret
+name: slack_webhook
+data: wW45kp0L6NzKIai3nV3ihLpixMzkX5IAwrJD02G9M6IXnnXcgoSxkRj7nAhfIu5DNmaeZuj5x/wbAfbO8qfUfA21/NJ4nxkpifYig35sMGrX4SxOks96kBQzCLnnInPYW7i7Q0itdtC67RQ=
+# drone encrypt  --allow-pull-request --allow-push-on-pull-request kamijin-fanta/drone-secret-sandbox https://hooks.slack.com/services/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
